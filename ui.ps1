@@ -91,7 +91,6 @@ $buttonPlay.Add_Click({
             }
             Default {}
         }
-        Write-Host "点击了上一首按钮"
     })
 
 # $icon = [System.Drawing.Icon]::ExtractAssociatedIcon("C:\Users\lwdut\Documents\autoStart\spotify-control\prev_icon.png")
@@ -119,11 +118,12 @@ $buttonPlay.Add_Click({
 $buttonPause = New-Object Windows.Controls.Button
 $buttonPause.Content = "⏸️"
 $buttonPause.Add_Click({
-        # TODO: 添加暂停逻辑
         $action = "c"
         if ($status) {
             $action = "u"
         }
+        Write-Host $status
+        Write-Host $action
         $code = Spotify_C -action $action -accessToken $global:accessToken
         switch ($code) {
             401 {
@@ -145,8 +145,6 @@ $buttonPause.Add_Click({
             }
             Default {}
         }
-
-        Write-Host "点击了暂停按钮"
     })
 
 # 创建按钮3
@@ -174,7 +172,6 @@ $buttonStop.Add_Click({
             }
             Default {}
         }
-        Write-Host "点击了下一首按钮"
     })
 
 # 创建一个堆栈面板，用于放置按钮
@@ -204,12 +201,17 @@ function UpdateText([ref]$s) {
     }
 
     $s.Value = $resp.is_playing
-    Write-Output $resp.item.name
+    if ($resp.is_playing){
+        $textBlock.Text = $resp.item.name
+    }else{
+        $textBlock.Text = "待机中……"
+    }
+    # Write-Output $resp.item.name
     # if (-not [string]::IsNullOrEmpty($resp.item.name)) {
     #     $textBlock.Text = "待机中……"
     # } else {
     #     Write-Output "2"
-    $textBlock.Text = $resp.item.name
+
     # }
 }
 
