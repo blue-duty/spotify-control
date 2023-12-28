@@ -1,10 +1,12 @@
 # Spotify API相关信息
-
 $redirectURI = "http://localhost:9000/callback"  # 可以随意设置，但必须在Spotify应用程序设置中配置相同的重定向URI
 # Spotify的Access Token请求URL
 $tokenEndpoint = "https://accounts.spotify.com/api/token"
 # 播放控制url
 $apiEndpoint = "https://api.spotify.com/v1/me/player"
+$client = Get-Content -Path ".\client" | ConvertFrom-Json
+$clientID = $client.clientID
+$clientSecret = $client.clientSecret
 
 function get-Token {
     Start-ThreadJob -ScriptBlock {
