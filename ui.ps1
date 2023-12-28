@@ -56,7 +56,7 @@ $window.Topmost = $true
 $window.AllowsTransparency = $true
 
 # 设置窗口大小
-$window.Width = 200
+$window.Width = 300
 $window.Height = 80
 
 # # 创建一个边框效果（Rectangle）
@@ -122,8 +122,8 @@ $buttonPause.Add_Click({
         if ($status) {
             $action = "u"
         }
-        Write-Host $status
-        Write-Host $action
+        # Write-Host $status
+        # Write-Host $action
         $code = Spotify_C -action $action -accessToken $global:accessToken
         switch ($code) {
             401 {
@@ -202,24 +202,20 @@ function UpdateText([ref]$s) {
 
     $s.Value = $resp.is_playing
     if ($resp.is_playing){
-        $textBlock.Text = $resp.item.name
+        $buttonPause.Content = "⏸️"
+        $textBlock.Text = $resp.name
+        # $textBlock.Text = "jjjjewqdkljshilked2wqolikjiolkewjoikjhniojhdne2iowhjnkhnkw"
     }else{
+        $buttonPause.Content ='▶️'
         $textBlock.Text = "待机中……"
     }
-    # Write-Output $resp.item.name
-    # if (-not [string]::IsNullOrEmpty($resp.item.name)) {
-    #     $textBlock.Text = "待机中……"
-    # } else {
-    #     Write-Output "2"
-
-    # }
 }
 
 UpdateText -s ([ref]$status)
 
 # Create a DispatcherTimer
 $timer = New-Object Windows.Threading.DispatcherTimer
-$timer.Interval = [TimeSpan]::FromSeconds(30)
+$timer.Interval = [TimeSpan]::FromSeconds(50)
 $timer.Add_Tick({
         UpdateText -s ([ref]$status)
     })
@@ -260,8 +256,8 @@ $windowWidth = $window.Width
 $windowHeight = $window.Height
 
 # 设置窗口位置为右下角
-$window.Left = $screenWidth - $windowWidth
-$window.Top = $screenHeight - $windowHeight - 20
+$window.Left = $screenWidth - $windowWidth - 10
+$window.Top = $screenHeight - $windowHeight - 10
 
 # 显示窗口
 $window.ShowDialog()

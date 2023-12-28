@@ -19,6 +19,9 @@
     ```
 4. 运行`ui.ps1`，第一次启动会跳转浏览器进行授权，授权完成后即可正常使用
 
+## 后台运行
+` start-process pwsh -arg .\ui.ps1 -WindowStyle Hidden`
+
 # 效果
 
 ![](show.png)
